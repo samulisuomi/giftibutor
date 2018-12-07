@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -15,23 +16,23 @@ const theme = createMuiTheme({
   }
 });
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <div className="App">
-          <header className="App-header">
-            <h1>
-              Giftibutor v0.1
-            </h1>
-          </header>
-          <h1>asdasd</h1>
-          <h2>asdasd</h2>
-          <p>asdasd</p>
-          <main className="App-main">
-            <NameForm />
-          </main>
-        </div>
+        <Router>
+          <div className="App">
+            <header className="App-header">
+              <h1>
+                Giftibutor v0.1
+              </h1>
+            </header>
+            <main className="App-main">
+              <Route path="/" exact component={NameForm} />
+              <Route path="/giftee" exact component={() => (<span>TODO</span>)} />
+            </main>
+          </div>
+        </Router>
       </MuiThemeProvider>
     );
   }
