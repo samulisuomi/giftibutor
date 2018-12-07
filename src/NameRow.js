@@ -6,7 +6,7 @@ class NameRow extends PureComponent {
 
     return (
       <div className="NameRow">
-        { person.name }
+        <p>{ person.name }</p>
       </div>
     );
   }

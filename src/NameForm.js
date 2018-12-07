@@ -35,6 +35,14 @@ class NameForm extends PureComponent {
   renderPeople = () => {
     const { people } = this.state;
 
+    if (!people.length) {
+      return (
+        <span>
+          No people yet! Add a few using this 👇
+        </span>
+      )
+    }
+
     return people.map(person => (
       <NameRow
         person={ person }

@@ -21,8 +21,13 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <div className="App">
           <header className="App-header">
-            Giftibutor v0.1
+            <h1>
+              Giftibutor v0.1
+            </h1>
           </header>
+          <h1>asdasd</h1>
+          <h2>asdasd</h2>
+          <p>asdasd</p>
           <main className="App-main">
             <NameForm />
           </main>
