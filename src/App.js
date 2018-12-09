@@ -5,7 +5,7 @@ import './App.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import amber from '@material-ui/core/colors/amber';
 
-import NameForm from './NameForm'
+import PersonForm from './PersonForm'
 
 const theme = createMuiTheme({
   palette: {
@@ -29,7 +29,7 @@ class App extends PureComponent {
             </header>
             <main className="App-main">
               <Switch>
-                <Route path="/" exact component={NameForm} />
+                <Route path="/" exact component={ PersonForm } />
                 <Route path="/giftee" exact component={() => (<span children="TODO" />)} />
                 <Route component={() => (<span children="Not Found" />)} />
               </Switch>

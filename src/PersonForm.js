@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
-import './NameForm.css'
+import './PersonForm.css'
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +10,7 @@ import shuffle from 'lodash/shuffle';
 
 const MIN_PEOPLE = 2;
 
-class NameForm extends PureComponent {
+class PersonForm extends PureComponent {
   state = {
     name: '',
     // people: []
@@ -167,7 +167,7 @@ class NameForm extends PureComponent {
     const { name, people } = this.state;
 
     return (
-      <div className="NameForm">
+      <div className="PersonForm">
         <PersonTable
           people={ people }
           exclusionOptions={ this.getExclusionOptions() }
@@ -198,4 +198,4 @@ class NameForm extends PureComponent {
   }
 }
 
-export default NameForm;
+export default PersonForm;
