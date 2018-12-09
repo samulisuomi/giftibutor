@@ -17,19 +17,23 @@ class NameForm extends PureComponent {
     people: [
       {
         name: "Uno",
-        giftee: "asd"
+        giftee: "asd",
+        exclusion: null
       },
       {
         name: "Dos",
-        giftee: null
+        giftee: null,
+        exclusion: null
       },
       {
         name: "Tres",
-        giftee: null
+        giftee: null,
+        exclusion: null
       },
       {
         name: "Cuatro",
-        giftee: null
+        giftee: null,
+        exclusion: null
       },
     ]
   }
@@ -120,8 +124,38 @@ class NameForm extends PureComponent {
     });
   }
 
-  handleExcludeChange = (name, exclusion) => {
-    console.log(`Set exclusion for ${name}: ${exclusion}`);
+  handleExclusionChange = (name, exclusion) => {
+    const { people } = this.state;
+
+    const newPeople = people.map(person => {
+      // Symmetric exclusions:
+      if (person.name === name) {
+        return {
+          ...person,
+          exclusion
+        };
+      } else if (person.name === exclusion) {
+        return {
+          ...person,
+          exclusion: name
+        };
+      } else {
+        return person;
+      }
+    })
+  }
+
+  getExclusionOptions = () => {
+    const { people } = this.state;
+
+    return people.map(person => person.name);
+  }
+
+  exclusionPairsAllowed = () => {
+    const { people } = this.state;
+
+    // TODO:
+    return Math.round(people.length / 2);
   }
 
   render() {
@@ -129,7 +163,11 @@ class NameForm extends PureComponent {
 
     return (
       <div className="NameForm">
-        <PersonTable people={ people } onExcludeChange={ this.handleExcludeChange }/>
+        <PersonTable
+          people={ people }
+          exclusionOptions={ this.getExclusionOptions() }
+          onExclusionChange={ this.handleExclusionChange }
+        />
         <form
           noValidate
           onSubmit={ this.handleSubmit }
@@ -149,6 +187,7 @@ class NameForm extends PureComponent {
           />
         </form>
         { this.renderGenerateGiftees() }
+        <p>You're allowed max { this.exclusionPairsAllowed() } exclusion pairs</p>
       </div>
     );
   }

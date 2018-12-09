@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -29,17 +29,19 @@ const styles = theme => ({
 class PersonTable extends PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    people: PropTypes.array.isRequired
+    people: PropTypes.array.isRequired,
+    exclusionOptions: PropTypes.array.isRequired,
+    onExclusionChange: PropTypes.func.isRequired
   }
 
-  handleExcludeChange = person => event => {
-    const { onExcludeChange } = this.props;
+  handleExclusionChange = person => event => {
+    const { onExclusionChange } = this.props;
 
-    onExcludeChange(person.name, event.target.value);
+    onExclusionChange(person.name, event.target.value);
   }
 
   render() {
-    const { classes, people } = this.props;
+    const { classes, exclusionOptions, people } = this.props;
 
     return people.length ? (
       <Paper className={ classes.root }>
@@ -55,21 +57,20 @@ class PersonTable extends PureComponent {
             {people.map(person => {
               return (
                 <TableRow key={ person.name }>
-                  { /* <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell> */ }
                   <TableCell>{ person.name }</TableCell>
                   <TableCell>
                     <NativeSelect
                       value={ person.exclude }
-                      onChange={ this.handleExcludeChange(person) }
-                      name="exclude"
+                      onChange={ this.handleExclusionChange(person.name) }
+                      name="exclusion"
                       className={ classes.excludeSelect }
                     >
                       <option value="">Select...</option>
-                      <option value={10}>Ten</option>
-                      <option value={20}>Twenty</option>
-                      <option value={30}>Thirty</option>
+                      { exclusionOptions
+                          .filter(name => name !== name)
+                          .map(name => (
+                            <option value={ name }>{ name }</option>
+                          )) }
                     </NativeSelect>
                   </TableCell>
                   <TableCell>{ person.giftee }</TableCell>
