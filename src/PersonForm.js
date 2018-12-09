@@ -8,7 +8,7 @@ import PersonTable from './PersonTable'
 
 import shuffle from 'lodash/shuffle';
 
-const MIN_PEOPLE = 2;
+const MIN_PEOPLE = 3;
 
 class PersonForm extends PureComponent {
   state = {
@@ -56,7 +56,7 @@ class PersonForm extends PureComponent {
     return people.some(person => person.name === formattedName);
   }
 
-  generateGiftees = () => {
+  handleGenerateGiftees = () => {
     const { people } = this.state;
 
     const shuffledPeople = shuffle(people);
@@ -126,14 +126,16 @@ class PersonForm extends PureComponent {
   }
 
   render() {
-    const { name, people } = this.state;
+    window.pf = this;
+
+    const { name, people, exclusions } = this.state;
 
     const exclusionsByName = this.getExclusionsByName()
     const peopleWithExclusions = people.map(person => ({
       ...person,
       exclusion: exclusionsByName[person.name] || null
     }));
-
+    const addingMoreExclusionsDisabled = Math.floor(people.length / 2) <= exclusions.length;
     const isGenerateGifteesDisabled = people.length < MIN_PEOPLE;
 
     return (
@@ -147,7 +149,7 @@ class PersonForm extends PureComponent {
                 color="primary"
                 disabled={ isGenerateGifteesDisabled }
                 type="submit"
-                onClick={ this.generateGiftees }
+                onClick={ this.handleGenerateGiftees }
               />
             ) : null }
           </p>
@@ -157,6 +159,7 @@ class PersonForm extends PureComponent {
           exclusionOptions={ this.getExclusionOptions() }
           onPersonDelete={ this.handlePersonDelete }
           onExclusionChange={ this.handleExclusionChange }
+          addingMoreExclusionsDisabled={ isGenerateGifteesDisabled || addingMoreExclusionsDisabled }
         />
         { isGenerateGifteesDisabled ? (
           <p>

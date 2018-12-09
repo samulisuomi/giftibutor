@@ -47,7 +47,8 @@ class PersonTable extends PureComponent {
     people: PropTypes.array.isRequired,
     exclusionOptions: PropTypes.array.isRequired,
     onPersonDelete: PropTypes.func.isRequired,
-    onExclusionChange: PropTypes.func.isRequired
+    onExclusionChange: PropTypes.func.isRequired,
+    addingMoreExclusionsDisabled: PropTypes.bool
   }
 
   handleExclusionChange = name => event => {
@@ -59,7 +60,12 @@ class PersonTable extends PureComponent {
   }
 
   render() {
-    const { classes, exclusionOptions, people } = this.props;
+    const {
+      classes,
+      exclusionOptions,
+      people,
+      addingMoreExclusionsDisabled
+    } = this.props;
 
     return people.length ? (
       <Paper className={ classes.root }>
@@ -81,10 +87,11 @@ class PersonTable extends PureComponent {
                   <TableCell>{ person.name }</TableCell>
                   <TableCell>
                     <NativeSelect
-                      value={ value }
-                      onChange={ this.handleExclusionChange(person.name) }
                       name="exclusion"
                       className={ value ? classes.exclusionSelect : classes.noExclusionSelect }
+                      value={ value }
+                      disabled={ !value && addingMoreExclusionsDisabled }
+                      onChange={ this.handleExclusionChange(person.name) }
                     >
                       <option className={ classes.nullOption} value="">Select...</option>
                       { exclusionOptions
