@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -17,9 +17,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     backgroundColor: '#f5f3da'
-  },
-  table: {
-    minWidth: 700,
   },
   excludeSelect: {
     fontSize: '0.8125rem'
@@ -45,7 +42,7 @@ class PersonTable extends PureComponent {
 
     return people.length ? (
       <Paper className={ classes.root }>
-        <Table className={ classes.table }>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>

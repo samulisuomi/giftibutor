@@ -17,7 +17,7 @@ class NameForm extends PureComponent {
     people: [
       {
         name: "Uno",
-        giftee: "asd",
+        giftee: null,
         exclusion: null
       },
       {
@@ -142,7 +142,12 @@ class NameForm extends PureComponent {
       } else {
         return person;
       }
-    })
+    });
+
+    this.setState({
+      ...this.state,
+      people: newPeople
+    });
   }
 
   getExclusionOptions = () => {
