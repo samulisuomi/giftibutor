@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import './PersonForm.css'
 
 import Button from '@material-ui/core/Button';
@@ -62,14 +62,19 @@ class PersonForm extends PureComponent {
     const shuffledPeople = shuffle(people);
     const giftees = [ ...shuffledPeople.slice(1), shuffledPeople[0] ];
 
-    const newPeople = people.map((person, index) => {
-      const giftee = giftees[index];
+    const gifteesByName = shuffledPeople.reduce((peopleByName, person, index) => {
+      return {
+        ...peopleByName,
+        [person.name]: giftees[index].name
+      }
+    }, {})
 
+    const newPeople = people.map(person => {
       return {
         ...person,
-        giftee: giftee.name
+        giftee: gifteesByName[person.name]
       };
-    })
+    });
 
     this.setState({
       people: newPeople
@@ -79,10 +84,12 @@ class PersonForm extends PureComponent {
   handleExclusionChange = (name, excludedName) => {
     const { exclusions } = this.state;
 
+    const filteredExclusions = exclusions.filter(pair => !pair.has(name) && !pair.has(excludedName))
+
     const newExclusions = excludedName ? [
-      ...exclusions.filter(pair => !pair.has(name) && !pair.has(excludedName)),
+      ...filteredExclusions,
       new Set([ name, excludedName ])
-    ] : exclusions.filter(pair => !pair.has(name) && !pair.has(excludedName));
+    ] : filteredExclusions;
 
     this.setState({
       exclusions: newExclusions
