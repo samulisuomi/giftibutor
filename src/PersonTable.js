@@ -18,7 +18,7 @@ const styles = theme => ({
     overflowX: 'auto',
     backgroundColor: '#f5f3da'
   },
-  excludeSelect: {
+  exclusionSelect: {
     fontSize: '0.8125rem'
   }
 });
@@ -31,10 +31,10 @@ class PersonTable extends PureComponent {
     onExclusionChange: PropTypes.func.isRequired
   }
 
-  handleExclusionChange = person => event => {
+  handleExclusionChange = name => event => {
     const { onExclusionChange } = this.props;
 
-    onExclusionChange(person.name, event.target.value);
+    onExclusionChange(name, event.target.value);
   }
 
   render() {
@@ -57,10 +57,10 @@ class PersonTable extends PureComponent {
                   <TableCell>{ person.name }</TableCell>
                   <TableCell>
                     <NativeSelect
-                      value={ person.exclude }
+                      value={ person.exclusion }
                       onChange={ this.handleExclusionChange(person.name) }
                       name="exclusion"
-                      className={ classes.excludeSelect }
+                      className={ classes.exclusionSelect }
                     >
                       <option value="">Select...</option>
                       { exclusionOptions
