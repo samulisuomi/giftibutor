@@ -13,25 +13,7 @@ const MIN_PEOPLE = 2;
 class PersonForm extends PureComponent {
   state = {
     name: '',
-    // people: []
-    people: [
-      {
-        name: "Uno",
-        giftee: null
-      },
-      {
-        name: "Dos",
-        giftee: null
-      },
-      {
-        name: "Tres",
-        giftee: null
-      },
-      {
-        name: "Cuatro",
-        giftee: null
-      },
-    ],
+    people: [],
     exclusions: []
   }
 
@@ -72,32 +54,6 @@ class PersonForm extends PureComponent {
     const formattedName = this.formatName(name);
 
     return people.some(person => person.name === formattedName);
-  }
-
-  renderGenerateGiftees = () => {
-    const { people } = this.state;
-
-    const isGenerateGifteesDisabled = people.length < MIN_PEOPLE;
-
-    return (
-      <Fragment>
-        { isGenerateGifteesDisabled ? (
-          <p>
-            Add at least { MIN_PEOPLE } people to be able to generate giftees.
-          </p>
-        ) : null }
-        <p>
-          <Button
-            children="Generate giftees"
-            variant="contained"
-            color="primary"
-            disabled={ isGenerateGifteesDisabled }
-            type="submit"
-            onClick={ this.generateGiftees }
-          />
-        </p>
-      </Fragment>
-    )
   }
 
   generateGiftees = () => {
@@ -171,14 +127,35 @@ class PersonForm extends PureComponent {
       exclusion: exclusionsByName[person.name] || null
     }));
 
+    const isGenerateGifteesDisabled = people.length < MIN_PEOPLE;
+
     return (
       <div className="PersonForm">
+        <div className="generate-giftees-container">
+          <p>
+            { people.length ? (
+              <Button
+                children="Generate giftees"
+                variant="contained"
+                color="primary"
+                disabled={ isGenerateGifteesDisabled }
+                type="submit"
+                onClick={ this.generateGiftees }
+              />
+            ) : null }
+          </p>
+        </div>
         <PersonTable
           people={ peopleWithExclusions }
           exclusionOptions={ this.getExclusionOptions() }
           onPersonDelete={ this.handlePersonDelete }
           onExclusionChange={ this.handleExclusionChange }
         />
+        { isGenerateGifteesDisabled ? (
+          <p>
+            Add at least { MIN_PEOPLE } people to be able to generate giftees.
+          </p>
+        ) : null }
         <form
           noValidate
           onSubmit={ this.handleSubmit }
@@ -198,7 +175,6 @@ class PersonForm extends PureComponent {
             type="submit"
           />
         </form>
-        { this.renderGenerateGiftees() }
       </div>
     );
   }
