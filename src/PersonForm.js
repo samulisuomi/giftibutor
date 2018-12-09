@@ -17,25 +17,22 @@ class PersonForm extends PureComponent {
     people: [
       {
         name: "Uno",
-        giftee: null,
-        exclusion: null
+        giftee: null
       },
       {
         name: "Dos",
-        giftee: null,
-        exclusion: null
+        giftee: null
       },
       {
         name: "Tres",
-        giftee: null,
-        exclusion: null
+        giftee: null
       },
       {
         name: "Cuatro",
-        giftee: null,
-        exclusion: null
+        giftee: null
       },
-    ]
+    ],
+    exclusions: []
   }
 
   handleNameChange = event => {
@@ -119,34 +116,29 @@ class PersonForm extends PureComponent {
     })
 
     this.setState({
-      ...this.state,
       people: newPeople
     });
   }
 
-  handleExclusionChange = (name, exclusion) => {
-    const { people } = this.state;
+  handleExclusionChange = (name, excludedName) => {
+    const { exclusions } = this.state;
 
-    const newPeople = people.map(person => {
-      // Symmetric exclusions:
-      if (person.name === name) {
-        return {
-          ...person,
-          exclusion
-        };
-      } else if (person.name === exclusion) {
-        return {
-          ...person,
-          exclusion: name
-        };
-      } else {
-        return person;
-      }
-    });
+    const newExclusions = excludedName ? [
+      ...exclusions.filter(pair => !pair.has(name) && !pair.has(excludedName)),
+      new Set([ name, excludedName ])
+    ] : exclusions.filter(pair => !pair.has(name) && !pair.has(excludedName));
 
     this.setState({
-      ...this.state,
-      people: newPeople
+      exclusions: newExclusions
+    });
+  }
+
+  handlePersonDelete = name => {
+    const { people, exclusions } = this.state;
+
+    this.setState({
+      people: people.filter(person => person.name !== name),
+      exclusions: exclusions.filter(pair => !pair.has(name)),
     });
   }
 
@@ -156,21 +148,35 @@ class PersonForm extends PureComponent {
     return people.map(person => person.name);
   }
 
-  exclusionPairsAllowed = () => {
-    const { people } = this.state;
+  getExclusionsByName = () => {
+    const { exclusions } = this.state;
 
-    // TODO:
-    return Math.round(people.length / 2);
+    return exclusions.reduce((exclusionsByName, exclusion) => {
+      const names = Array.from(exclusion);
+
+      return {
+        ...exclusionsByName,
+        [names[0]]: names[1],
+        [names[1]]: names[0]
+      }
+    }, {})
   }
 
   render() {
     const { name, people } = this.state;
 
+    const exclusionsByName = this.getExclusionsByName()
+    const peopleWithExclusions = people.map(person => ({
+      ...person,
+      exclusion: exclusionsByName[person.name] || null
+    }));
+
     return (
       <div className="PersonForm">
         <PersonTable
-          people={ people }
+          people={ peopleWithExclusions }
           exclusionOptions={ this.getExclusionOptions() }
+          onPersonDelete={ this.handlePersonDelete }
           onExclusionChange={ this.handleExclusionChange }
         />
         <form
@@ -192,7 +198,6 @@ class PersonForm extends PureComponent {
           />
         </form>
         { this.renderGenerateGiftees() }
-        <p>You're allowed max { this.exclusionPairsAllowed() } exclusion pairs</p>
       </div>
     );
   }
