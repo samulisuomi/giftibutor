@@ -1,11 +1,12 @@
 .PersonForm form {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
 
-.PersonForm ul {
-  text-align: left;
+.PersonForm .add-person {
+  margin-bottom: 8px;
+  margin-left: 14px;
 }
 
 .PersonForm .generate-giftees {

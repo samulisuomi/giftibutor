@@ -190,6 +190,7 @@ class PersonForm extends PureComponent {
             margin="normal"
           />
           <Button
+            className="add-person"
             children="Add"
             variant="contained"
             color="primary"
