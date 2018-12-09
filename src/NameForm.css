@@ -3,3 +3,11 @@ form {
   align-items: center;
   justify-content: center;
 }
+
+ul {
+  text-align: left;
+}
+
+.generate-giftees {
+  padding-top: 2em;
+}
