@@ -64,9 +64,13 @@ class PersonTable extends PureComponent {
                     >
                       <option value="">Select...</option>
                       { exclusionOptions
-                          .filter(name => name !== name)
+                          .filter(name => name !== person.name)
                           .map(name => (
-                            <option value={ name }>{ name }</option>
+                            <option
+                              key={ name }
+                              value={ name }
+                              children={ name }
+                            />
                           )) }
                     </NativeSelect>
                   </TableCell>
