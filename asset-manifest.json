@@ -1,13 +1,13 @@
 {
   "main.css": "/giftibutor/static/css/main.57e31f53.chunk.css",
-  "main.js": "/giftibutor/static/js/main.3730e96b.chunk.js",
-  "main.js.map": "/giftibutor/static/js/main.3730e96b.chunk.js.map",
-  "static/js/1.c5705ce3.chunk.js": "/giftibutor/static/js/1.c5705ce3.chunk.js",
-  "static/js/1.c5705ce3.chunk.js.map": "/giftibutor/static/js/1.c5705ce3.chunk.js.map",
+  "main.js": "/giftibutor/static/js/main.8ffcef6d.chunk.js",
+  "main.js.map": "/giftibutor/static/js/main.8ffcef6d.chunk.js.map",
+  "static/js/1.3f1836c9.chunk.js": "/giftibutor/static/js/1.3f1836c9.chunk.js",
+  "static/js/1.3f1836c9.chunk.js.map": "/giftibutor/static/js/1.3f1836c9.chunk.js.map",
   "runtime~main.js": "/giftibutor/static/js/runtime~main.2cca6438.js",
   "runtime~main.js.map": "/giftibutor/static/js/runtime~main.2cca6438.js.map",
   "static/css/main.57e31f53.chunk.css.map": "/giftibutor/static/css/main.57e31f53.chunk.css.map",
   "index.html": "/giftibutor/index.html",
-  "precache-manifest.31705a9ad284a048b9d3b5fff93c3823.js": "/giftibutor/precache-manifest.31705a9ad284a048b9d3b5fff93c3823.js",
+  "precache-manifest.c71d73342275c6b967575dd48a1e7c36.js": "/giftibutor/precache-manifest.c71d73342275c6b967575dd48a1e7c36.js",
   "service-worker.js": "/giftibutor/service-worker.js"
 }
