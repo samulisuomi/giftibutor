@@ -13,25 +13,25 @@ const MIN_PEOPLE = 2;
 class NameForm extends PureComponent {
   state = {
     name: '',
-    people: []
-    // people: [
-    //   {
-    //     name: "Uno",
-    //     giftee: "asd"
-    //   },
-    //   {
-    //     name: "Dos",
-    //     giftee: null
-    //   },
-    //   {
-    //     name: "Tres",
-    //     giftee: null
-    //   },
-    //   {
-    //     name: "Cuatro",
-    //     giftee: null
-    //   },
-    // ]
+    // people: []
+    people: [
+      {
+        name: "Uno",
+        giftee: "asd"
+      },
+      {
+        name: "Dos",
+        giftee: null
+      },
+      {
+        name: "Tres",
+        giftee: null
+      },
+      {
+        name: "Cuatro",
+        giftee: null
+      },
+    ]
   }
 
   handleNameChange = event => {
@@ -103,10 +103,9 @@ class NameForm extends PureComponent {
     const { people } = this.state;
 
     const shuffledPeople = shuffle(people);
-    
     const giftees = [ ...shuffledPeople.slice(1), shuffledPeople[0] ];
 
-    const newPeople = shuffledPeople.map((person, index) => {
+    const newPeople = people.map((person, index) => {
       const giftee = giftees[index];
 
       return {
@@ -121,12 +120,16 @@ class NameForm extends PureComponent {
     });
   }
 
+  handleExcludeChange = (name, exclusion) => {
+    console.log(`Set exclusion for ${name}: ${exclusion}`);
+  }
+
   render() {
     const { name, people } = this.state;
 
     return (
       <div className="NameForm">
-        <PersonTable people={ people } />
+        <PersonTable people={ people } onExcludeChange={ this.handleExcludeChange }/>
         <form
           noValidate
           onSubmit={ this.handleSubmit }
