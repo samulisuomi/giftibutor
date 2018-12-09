@@ -1,13 +1,13 @@
-form {
+.NameForm form {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-ul {
+.NameForm ul {
   text-align: left;
 }
 
-.generate-giftees {
+.NameForm .generate-giftees {
   padding-top: 2em;
 }

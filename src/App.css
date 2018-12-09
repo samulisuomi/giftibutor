@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.App-header {
+.App .App-header {
   background-color: #4caf50;
   display: flex;
   flex-direction: column;
@@ -13,17 +13,8 @@
   text-shadow: 0.2em 0.2em 0px rgba(0, 0, 0, 0.6);
 }
 
-.App-main {
+.App .App-main {
   max-width: 960px;
   margin: auto;
   padding: 0.5em;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
