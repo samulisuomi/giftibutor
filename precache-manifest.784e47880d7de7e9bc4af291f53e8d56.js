@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/giftibutor/static/css/main.3164e443.chunk.css"
   },
   {
-    "revision": "831a83e4a2e7af4a8628414909fe8330",
+    "revision": "549b2e04ce7b284a7da229ab16f309a8",
     "url": "/giftibutor/index.html"
   }
 ];
