@@ -20,7 +20,7 @@ class App extends PureComponent {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <Router>
+        <Router basename={ process.env.PUBLIC_URL }>
           <div className="App">
             <header className="App-header">
               <h1>
