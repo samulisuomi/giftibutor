@@ -38,7 +38,7 @@ class NameForm extends PureComponent {
     if (!people.length) {
       return (
         <span>
-          No people yet! Add a few using this 👇
+          No people yet! Add a few using this <span role="img" aria-label="pointing-down-hand">👇</span>
         </span>
       )
     }

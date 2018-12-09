@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -28,8 +28,11 @@ class App extends PureComponent {
               </h1>
             </header>
             <main className="App-main">
-              <Route path="/" exact component={NameForm} />
-              <Route path="/giftee" exact component={() => (<span>TODO</span>)} />
+              <Switch>
+                <Route path="/" exact component={NameForm} />
+                <Route path="/giftee" exact component={() => (<span children="TODO" />)} />
+                <Route component={() => (<span children="Not Found" />)} />
+              </Switch>
             </main>
           </div>
         </Router>
