@@ -17,7 +17,6 @@ import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     backgroundColor: '#f5f3da'
   },

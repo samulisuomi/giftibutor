@@ -17,3 +17,9 @@
   margin: auto;
   padding: 0.5em;
 }
+
+@media screen and (min-width: 1024px) {
+  .App .App-main {
+    padding-top: 2em;
+  }
+}
