@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import UrlCopier from './UrlCopier';
+
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -105,7 +107,11 @@ class PersonTable extends PureComponent {
                           )) }
                     </NativeSelect>
                   </TableCell>
-                  <TableCell>{ person.giftee }</TableCell>
+                  <TableCell>
+                    { person.giftee ? (
+                      <UrlCopier giftee={ person.giftee }/>
+                    ) : null }
+                  </TableCell>
                   <TableCell className={ classes.removeCell }>
                     <IconButton onClick={ this.handlePersonDelete(person.name) }>
                       <ClearRoundedIcon className={ classes.removeIcon }/>

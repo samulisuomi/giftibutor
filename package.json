@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.6.1",
     "@material-ui/icons": "^3.0.1",
+    "cryptr": "^4.0.2",
     "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",

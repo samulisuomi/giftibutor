@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
-import './PersonForm.css'
+import './PersonForm.css';
+
+import { encrypt } from './utils';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import PersonTable from './PersonTable'
+import PersonTable from './PersonTable';
 
 import shuffle from 'lodash/shuffle';
 import sortBy from 'lodash/sortBy';
@@ -16,6 +18,7 @@ class PersonForm extends PureComponent {
   state = {
     name: '',
     people: [],
+    // people: [ { name: '1', giftee: null }, { name: '2', giftee: null }, { name: '3', giftee: null }],
     exclusions: []
   }
 
@@ -178,9 +181,10 @@ class PersonForm extends PureComponent {
     const { name, people, exclusions } = this.state;
 
     const excludedNamesByName = this.getExcludedNamesByName()
-    const peopleWithExclusions = people.map(person => ({
+    const enhrichedPeople = people.map(person => ({
       ...person,
-      exclusion: excludedNamesByName[person.name] || null
+      exclusion: excludedNamesByName[person.name] || null,
+      giftee: person.giftee ? encrypt(person.giftee) : null
     }));
     const addingMoreExclusionsDisabled = Math.floor(people.length / 2) <= exclusions.length;
     const isGenerateGifteesDisabled = people.length < MIN_PEOPLE;
@@ -202,7 +206,7 @@ class PersonForm extends PureComponent {
           </p>
         </div>
         <PersonTable
-          people={ peopleWithExclusions }
+          people={ enhrichedPeople }
           exclusionOptions={ this.getExclusionOptions() }
           onPersonDelete={ this.handlePersonDelete }
           onExclusionChange={ this.handleExclusionChange }
