@@ -7,6 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import PersonTable from './PersonTable'
 
 import shuffle from 'lodash/shuffle';
+import sortBy from 'lodash/sortBy';
+import without from 'lodash/without';
 
 const MIN_PEOPLE = 3;
 
@@ -59,20 +61,67 @@ class PersonForm extends PureComponent {
   handleGenerateGiftees = () => {
     const { people } = this.state;
 
+    const excludedNamesByName = this.getExcludedNamesByName()
     const shuffledPeople = shuffle(people);
-    const giftees = [ ...shuffledPeople.slice(1), shuffledPeople[0] ];
+    const shuffledPeopleSortedByHasExclusionsFirst = sortBy(shuffledPeople, person => !excludedNamesByName.hasOwnProperty(person.name))
 
-    const gifteesByName = shuffledPeople.reduce((peopleByName, person, index) => {
+    // Analogy: order people around a circular table so that everybody's giftee sits on their right side
+    // and the giftee is not excluded from the person sitting on the left.
+
+    const originalFirstPerson = shuffledPeopleSortedByHasExclusionsFirst[0];
+
+    let gifteeNamesByName = shuffledPeople.reduce(accumulator => {
+      const {
+        currentPerson,
+        queue,
+        gifteeNamesByName
+      } = accumulator;
+
+      const excludedName = excludedNamesByName[currentPerson.name];
+
+      // Works properly even if excludedName is undefined:
+      const nextPersonIndex = queue.findIndex(person => person.name !== excludedName);
+      // If -1 we have consumed the whole original queue, let's point to the first person:
+      const nextPerson = nextPersonIndex !== -1 ? queue[nextPersonIndex] : originalFirstPerson;
+      const nextPersonName = nextPerson.name;
+
+      const newGifteeNamesByName = {
+        ...gifteeNamesByName,
+        [currentPerson.name]: nextPersonName
+      };
+
+      const newQueue = queue.length && nextPersonIndex !== -1 ? [
+        // Drop nextPerson from the queue:
+        ...queue.slice(0, nextPersonIndex), ...queue.slice(nextPersonIndex + 1, queue.length)
+      ] : queue
+
       return {
-        ...peopleByName,
-        [person.name]: giftees[index].name
+        currentPerson: nextPerson,
+        queue: newQueue,
+        gifteeNamesByName: newGifteeNamesByName
       }
-    }, {})
+    }, {
+      currentPerson: shuffledPeopleSortedByHasExclusionsFirst[0],
+      queue: shuffledPeopleSortedByHasExclusionsFirst.slice(1),
+      gifteeNamesByName: {}
+    }).gifteeNamesByName
+
+    // Horrible hack because our algorithm isn't perfect:
+    const namesWithoutGiftee = without(people.map(p => p.name), ...Object.keys(gifteeNamesByName));
+    const namesWithoutGifter = without(people.map(p => p.name), ...Object.values(gifteeNamesByName));
+
+    if (namesWithoutGiftee.length === 1 && namesWithoutGifter.length === 1 && namesWithoutGiftee[0] !== namesWithoutGifter[0]) {
+      const gifteelessExcludedName = excludedNamesByName[namesWithoutGiftee[0]];
+
+      if (gifteelessExcludedName !== namesWithoutGifter[0]) {
+        gifteeNamesByName[namesWithoutGiftee[0]] = namesWithoutGifter[0];
+      }
+    }
 
     const newPeople = people.map(person => {
       return {
         ...person,
-        giftee: gifteesByName[person.name]
+        giftee: gifteeNamesByName[person.name]
       };
     });
 
@@ -111,14 +160,14 @@ class PersonForm extends PureComponent {
     return people.map(person => person.name);
   }
 
-  getExclusionsByName = () => {
+  getExcludedNamesByName = () => {
     const { exclusions } = this.state;
 
-    return exclusions.reduce((exclusionsByName, exclusion) => {
+    return exclusions.reduce((excludedNamesByName, exclusion) => {
       const names = Array.from(exclusion);
 
       return {
-        ...exclusionsByName,
+        ...excludedNamesByName,
         [names[0]]: names[1],
         [names[1]]: names[0]
       }
@@ -126,14 +175,12 @@ class PersonForm extends PureComponent {
   }
 
   render() {
-    window.pf = this;
-
     const { name, people, exclusions } = this.state;
 
-    const exclusionsByName = this.getExclusionsByName()
+    const excludedNamesByName = this.getExcludedNamesByName()
     const peopleWithExclusions = people.map(person => ({
       ...person,
-      exclusion: exclusionsByName[person.name] || null
+      exclusion: excludedNamesByName[person.name] || null
     }));
     const addingMoreExclusionsDisabled = Math.floor(people.length / 2) <= exclusions.length;
     const isGenerateGifteesDisabled = people.length < MIN_PEOPLE;
