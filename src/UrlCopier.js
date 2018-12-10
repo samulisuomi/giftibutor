@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { withRouter } from 'react-router'
 import Clipboard from 'react-clipboard.js';
 
 class UrlCopier extends PureComponent {
@@ -23,4 +22,4 @@ class UrlCopier extends PureComponent {
   }
 }
 
-export default withRouter(UrlCopier);
+export default UrlCopier;
