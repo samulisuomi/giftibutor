@@ -23,9 +23,8 @@ class App extends PureComponent {
         <Router basename={ process.env.PUBLIC_URL }>
           <div className="App">
             <header className="App-header">
-              <h1>
-                Giftibutor
-              </h1>
+              <h1>Giftibutor</h1>
+              <h2>the Secret Santa generator</h2>
             </header>
             <main className="App-main">
               <Switch>

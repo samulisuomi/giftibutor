@@ -9,7 +9,22 @@
   align-items: center;
   justify-content: center;
   font-family: 'Courgette', cursive;
-  text-shadow: 0.2em 0.2em 0px rgba(0, 0, 0, 0.6);
+  padding: 1.5em;
+}
+
+.App .App-header h1 {
+  font-size: 3em;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0.075em 0.075em 0px rgba(0, 0, 0, 0.6);
+}
+
+.App .App-header h2 {
+  font-size: 1em;
+  margin: 0;
+  margin-top: 0.2em;
+  padding: 0;
+  text-shadow: 0.15em 0.15em 0px rgba(0, 0, 0, 0.6)
 }
 
 .App .App-main {
