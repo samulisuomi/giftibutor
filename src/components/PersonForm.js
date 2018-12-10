@@ -222,6 +222,7 @@ class PersonForm extends PureComponent {
           onSubmit={ this.handleSubmit }
         >
           <TextField
+            autoFocus
             label="Name"
             value={ name }
             onChange={ this.handleNameChange }
