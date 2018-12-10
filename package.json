@@ -9,6 +9,7 @@
     "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.6.3",
     "react-clipboard.js": "^2.0.2",
     "react-dom": "^16.6.3",

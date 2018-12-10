@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './PersonForm.css';
 
-import { encrypt } from '../utilities/utils';
+import { encrypt } from '../utilities/encryption';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
